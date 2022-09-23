@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 name = "gather-vision-gov-au-plugin"
 description = "A gather-vision plugin for obtaining data from Australian governments."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: Apache Software License",
@@ -29,6 +29,9 @@ dynamic = [
 "Changelog" = "https://github.com/anotherbyte-net/gather-vision-gov-au-plugin/blob/main/CHANGELOG.md"
 "Source" = "https://github.com/anotherbyte-net/gather-vision-gov-au-plugin"
 "Tracker" = "https://github.com/anotherbyte-net/gather-vision-gov-au-plugin/issues"
+
+[project.entry-points."gather_vision.plugin"]
+gov_au = "gather_vision_gov_au_plugin.plugin:PluginEntry"
 
 [tool.setuptools.packages.find]
 where = [
@@ -88,27 +91,20 @@ src_paths = [
 legacy_tox_ini = """
 [tox]
 isolated_build = True
-# envlist = py38,py39,py310,py311-dev
-envlist = py310
-toxworkdir = {homedir}/tox-app
+envlist = py37,py38,py39,py310,py311
 
 [testenv]
-recreate = true
+# recreate = true
 deps =
-    -rrequirements.txt
-    -rrequirements-dev.txt
+    -r requirements.txt
+    -r requirements-dev.txt
 commands =
-    coverage run -m pytest
-    # black --check src
-    # flake8 src --count --show-source --statistics
-    # pydocstyle src
-    # mypy src
-    # pylint src
-    # pyright src
+    python -X dev -m pytest --doctest-modules --junitxml=pytest-coverage.xml.cover --cov-report=term-missing:skip-covered --cov=src/ tests/
 """
 
+
 [tool.pydocstyle]
-ignore = 'D104'
+convention = 'google'
 
 [tool.mypy]
 ignore_missing_imports = true
