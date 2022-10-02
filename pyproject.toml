@@ -46,8 +46,9 @@ gov_au = "gather_vision_gov_au_plugin.plugin:PluginEntry"
 where = [
     "src",
 ]
+# include and exclude accept strings representing glob patterns.
 include = [
-    "gather_vision_gov_au_plugin",
+    "gather_vision_gov_au_plugin*",
 ]
 
 [tool.setuptools.dynamic]

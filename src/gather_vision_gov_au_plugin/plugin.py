@@ -3,14 +3,18 @@ import logging
 from gather_vision import model
 from gather_vision.plugin import Entry
 
-from .air import QueenslandAir
-from .election import AustraliaElection
-from .electricity import QueenslandEnergexElectricity
-from .electricity import QueenslandErgonEnergyElectricity
-from .petition import AustralianGovernmentPetitions
-from .petition import BrisbaneCityCouncilPetitions
-from .petition import QueenslandGovernmentPetitions
-from .transport import QueenslandFuel
+from gather_vision_gov_au_plugin.air.qld import QueenslandAir
+from gather_vision_gov_au_plugin.election.national import AustraliaElection
+from gather_vision_gov_au_plugin.electricity.qld_energex import (
+    QueenslandEnergexElectricity,
+)
+from gather_vision_gov_au_plugin.electricity.qld_ergon_energy import (
+    QueenslandErgonEnergyElectricity,
+)
+from gather_vision_gov_au_plugin.petition.national import AustralianGovernmentPetitions
+from gather_vision_gov_au_plugin.petition.qld import QueenslandGovernmentPetitions
+from gather_vision_gov_au_plugin.petition.qld_bne import BrisbaneCityCouncilPetitions
+from gather_vision_gov_au_plugin.transport.qld_fuel import QueenslandFuel
 
 logger = logging.getLogger(__name__)
 

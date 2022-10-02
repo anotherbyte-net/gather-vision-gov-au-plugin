@@ -94,8 +94,10 @@ pip install dist/gather_vision_gov_au_plugin-$GATHER_VISION_GOV_AU_PLUGIN_VERSIO
 Test the installed package.
 
 ```python
-import gather_vision_gov_au_plugin
-# TODO
+from gather_vision import app, model
+app_args = model.ListArgs()
+main_app = app.App()
+main_app.list(app_args)
 ```
 
 If the package seems to work as expected, upload it to the live PyPI.
