@@ -27,52 +27,33 @@ pip list --outdated
 
 ## Run tests and linters
 
+Run the tests and linters with multiple python versions using tox.
+
+If the pip dependencies have changed, it might be necessary to 
+(un)comment `recreate = true` in the tox section in `pyproject.toml`.
+
+To run using all available python versions:
+
 ```bash
-# Tests - multiple python versions using tox
-# (it might be necessary to (un)comment `recreate = true` in pyproject.toml)
 python -X dev -m tox
+```
 
-# Tests - Run tests with coverage
-python -X dev -m coverage run -m pytest --tb=line --doctest-modules
-(
-  set -o pipefail
-  python -X dev -m pytest --doctest-modules --junitxml=pytest.xml \
-    --cov-report=term-missing:skip-covered --cov=src/ tests/ | tee pytest-coverage.txt
-)
+To run using the active python:
 
-# Tests - Coverage report
-python -X dev -m coverage report
-
-# Linter - flake8
-python -X dev -m flake8 src --count --show-source --statistics
-
-# Linter - mypy
-python -X dev -m mypy src
-
-# Linter - black
-python -X dev -m black --check src
-
-# Linter - pylint
-python -X dev -m pylint src
-
-# Linter - pydocstyle
-python -X dev -m pydocstyle src
-
-# Linter - pyright
-python -X dev -m pyright src
-
-# Linter - pytype
-python -X dev -m pytype -j auto
+```bash
+python -X dev -m tox -e py
 ```
 
 ## Generate docs
 
-Generate the docs using pdoc3:
+Generate the docs using pdoc:
 
 ```bash
-pdoc --html --output-dir docs src/gather_vision_gov_au_plugin --force \
-  --config "lunr_search={'fuzziness': 1, 'index_docstrings': True}" \
-  --config "git_link_template='https://github.com/anotherbyte-net/gather-vision-gov-au-plugin/blob/{commit}/{path}#L{start_line}-L{end_line}'"
+pdoc --docformat google \
+  --edit-url gather_vision_gov_au_plugin=https://github.com/anotherbyte-net/gather-vision/blob/main/src/gather_vision_gov_au_plugin/ \
+  --search --show-source \
+  --output-directory docs \
+  ./src/gather_vision_gov_au_plugin
 ```
 
 ## Create and upload release
@@ -112,8 +93,9 @@ pip install dist/gather_vision_gov_au_plugin-$GATHER_VISION_GOV_AU_PLUGIN_VERSIO
 
 Test the installed package.
 
-```bash
-
+```python
+import gather_vision_gov_au_plugin
+# TODO
 ```
 
 If the package seems to work as expected, upload it to the live PyPI.

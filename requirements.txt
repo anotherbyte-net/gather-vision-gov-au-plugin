@@ -1,1 +1,10 @@
-gather-vision==0.0.1
+# Python version support
+importlib_metadata~=4.2;python_version<"3.8"
+importlib_metadata~=5.0;python_version>="3.8"
+importlib_resources~=5.9
+typing_inspect~=0.8;python_version<"3.8"
+typing_extensions~=4.3
+
+# working with data
+gather-vision~=0.0.3
+leaf-focus~=0.5

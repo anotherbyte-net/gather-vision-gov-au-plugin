@@ -10,11 +10,20 @@ description = "A gather-vision plugin for obtaining data from Australian governm
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
-    "Programming Language :: Python :: 3",
+    "Development Status :: 2 - Pre-Alpha",
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: POSIX :: Linux",
     "Operating System :: Microsoft :: Windows",
-    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Utilities",
 ]
@@ -94,14 +103,47 @@ isolated_build = True
 envlist = py37,py38,py39,py310,py311
 
 [testenv]
-# recreate = true
+recreate = true
 deps =
     -r requirements.txt
     -r requirements-dev.txt
+allowlist_externals =
+    echo
 commands =
-    python -X dev -m pytest --doctest-modules --junitxml=pytest-coverage.xml.cover --cov-report=term-missing:skip-covered --cov=src/ tests/
+    echo "::group::Outdated deps"
+    -pip list --outdated
+    echo "::endgroup::"
+    echo "::group::Test coverage"
+    python -X dev -m coverage run -m pytest --tb=line --doctest-modules
+    echo "::endgroup::"
+    echo "::group::Coverage report"
+    -python -X dev -m coverage report
+    echo "::endgroup::"
+    echo "::group::Linter - mypy"
+    -python -X dev -m mypy src
+    echo "::endgroup::"
+    echo "::group::Linter - black"
+    -python -X dev -m black --check src
+    echo "::endgroup::"
+    echo "::group::Linter - pylint"
+    -python -X dev -m pylint src
+    echo "::endgroup::"
+    echo "::group::Linter - pydocstyle"
+    -python -X dev -m pydocstyle src
+    echo "::endgroup::"
+    echo "::group::Linter - pyright"
+    -python -X dev -m pyright src
+    echo "::endgroup::"
+    echo "::group::Linter - flake8"
+    -python -X dev -m flake8 src --count --show-source --statistics --exit-zero
+    echo "::endgroup::"
+    echo "::group::Linter - pytype"
+    -python -X dev -m pytype -j auto
+    echo "::endgroup::"
+    echo "::group::Build"
+    python -m build --sdist --wheel --outdir dist/ .
+    echo "::endgroup::"
 """
-
 
 [tool.pydocstyle]
 convention = 'google'
