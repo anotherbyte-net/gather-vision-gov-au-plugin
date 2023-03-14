@@ -1,3 +1,9 @@
+# Australian Government
+
+# TODO: check if this info is available anywhere else, in a better format?
+
+# people
+
 # names and details
 # https://www.aph.gov.au/Senators_and_Members/Guidelines_for_Contacting_Senators_and_Members/Address_labels_and_CSV_files
 # ul.links
@@ -5,6 +11,12 @@
 # url: li a[href] (CSV ...)
 
 # ------------------
+
+# sitting dates
+
+# ------------------
+
+# meeting minutes - attendance?
 
 # attendance house of reps
 # https://parlinfo.aph.gov.au/parlInfo/search/summary/summary.w3p;adv=yes;orderBy=date-eFirst;page=0;query=attendance%20Dataset%3Avotes,voteshistorical;resCount=Default
@@ -39,3 +51,10 @@
 #       <guid isPermaLink="true">https://parlinfo.aph.gov.au:443/parlInfo/search/display/display.w3p;query=Id%3A%22chamber%2Fjournals%2F62e1ea89-b683-4ed4-bc70-140858e0aaad%2F0001%22</guid>
 #       <pubDate>Wed, 30 Mar 2022 00:00:00 +1000</pubDate>
 #    </item>
+
+# ----------
+
+
+# meeting minutes - votes?
+
+# ------------------

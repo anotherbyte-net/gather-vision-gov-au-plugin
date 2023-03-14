@@ -1,7 +1,7 @@
 import dataclasses
 import typing
 
-from gather_vision import model
+from gather_vision.plugin import data
 
 
 @dataclasses.dataclass
@@ -9,8 +9,7 @@ class QueenslandGovernmentPetitionItem:
     pass
 
 
-class QueenslandGovernmentPetitions(model.WebData):
-
+class QueenslandGovernmentPetitions(data.WebData):
     base_url = "https://www.parliament.qld.gov.au/Work-of-the-Assembly/Petitions"
     list_url = f"{base_url}/Current-EPetitions"
 
@@ -38,6 +37,6 @@ class QueenslandGovernmentPetitions(model.WebData):
         return [self.list_url]
 
     def parse_response(
-        self, data: model.WebDataAvailable
-    ) -> typing.Generator[typing.Union[str, model.IsDataclass], typing.Any, typing.Any]:
+        self, data: data.WebDataAvailable
+    ) -> typing.Generator[typing.Union[str, data.IsDataclass], typing.Any, typing.Any]:
         pass

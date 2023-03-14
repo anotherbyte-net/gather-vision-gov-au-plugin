@@ -1,7 +1,7 @@
 import dataclasses
 import typing
 
-from gather_vision import model
+from gather_vision.plugin import data
 
 
 @dataclasses.dataclass
@@ -9,8 +9,7 @@ class QueenslandAirItem:
     pass
 
 
-class QueenslandAir(model.WebData):
-
+class QueenslandAir(data.WebData):
     # qld air quality
     # https://aqicn.org/station/@131722
     # https://www.iqair.com/au/australia/queensland/toowoomba/south-street
@@ -25,6 +24,6 @@ class QueenslandAir(model.WebData):
         return [self.list_url]
 
     def parse_response(
-        self, data: model.WebDataAvailable
-    ) -> typing.Generator[typing.Union[str, model.IsDataclass], typing.Any, typing.Any]:
+        self, data: data.WebDataAvailable
+    ) -> typing.Generator[typing.Union[str, data.IsDataclass], typing.Any, typing.Any]:
         pass

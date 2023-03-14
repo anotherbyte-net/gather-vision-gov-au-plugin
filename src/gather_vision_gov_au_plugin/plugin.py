@@ -1,52 +1,54 @@
 import logging
 
-from gather_vision import model
-from gather_vision.plugin import Entry
+from gather_vision.plugin import entry, data
 
-from gather_vision_gov_au_plugin.air.qld import QueenslandAir
-from gather_vision_gov_au_plugin.election.national import AustraliaElection
-from gather_vision_gov_au_plugin.electricity.qld_energex import (
-    QueenslandEnergexElectricity,
+from gather_vision_gov_au_plugin.air import queensland as air_qld
+from gather_vision_gov_au_plugin.election import australia as aust_election
+from gather_vision_gov_au_plugin.electricity import queensland_energex as qld_energex
+from gather_vision_gov_au_plugin.electricity import (
+    queensland_ergon_energy as qld_ergon_energy,
 )
-from gather_vision_gov_au_plugin.electricity.qld_ergon_energy import (
-    QueenslandErgonEnergyElectricity,
-)
-from gather_vision_gov_au_plugin.petition.national import AustralianGovernmentPetitions
-from gather_vision_gov_au_plugin.petition.qld import QueenslandGovernmentPetitions
-from gather_vision_gov_au_plugin.petition.qld_bne import BrisbaneCityCouncilPetitions
-from gather_vision_gov_au_plugin.transport.qld_fuel import QueenslandFuel
+from gather_vision_gov_au_plugin.petition import australia as aust_petition
+from gather_vision_gov_au_plugin.petition import queensland as qld_petition
+from gather_vision_gov_au_plugin.petition import queensland_brisbane as qld_bne_petition
+from gather_vision_gov_au_plugin.transport import queensland_fuel as qld_fuel
 
 logger = logging.getLogger(__name__)
 
 
-class PluginEntry(Entry):
+class PluginEntry(entry.Entry):
     """The entry class for the plugin."""
 
     name = "gov_au"
 
     _data_sources = [
         # air
-        QueenslandAir,
+        air_qld.QueenslandAir,
         # election
-        AustraliaElection,
+        aust_election.AustraliaElection,
         # electricity
-        QueenslandEnergexElectricity,
-        QueenslandErgonEnergyElectricity,
+        qld_energex.QueenslandEnergexElectricity,
+        qld_ergon_energy.QueenslandErgonEnergyElectricity,
         # government
         # petition
-        AustralianGovernmentPetitions,
-        QueenslandGovernmentPetitions,
-        BrisbaneCityCouncilPetitions,
+        aust_petition.AustralianGovernmentPetitions,
+        qld_petition.QueenslandGovernmentPetitions,
+        qld_bne_petition.BrisbaneCityCouncilPetitions,
         # transport
-        QueenslandFuel,
+        qld_fuel.QueenslandFuel,
         # water
     ]
 
-    def update(self, args: model.UpdateArgs) -> model.UpdateResult:
+    def update(self, args: entry.UpdateArgs) -> entry.UpdateResult:
         logger.info(f"Update {self.name}")
-        return model.UpdateResult()
+        web_data = [
+            i(plugin_name=args.name, plugin_data_source=args.data_source)
+            for i in self._data_sources
+            if issubclass(i, data.WebData)
+        ]
+        return entry.UpdateResult(web_data=web_data, local_data=list())
 
-    def list(self, args: model.ListArgs) -> model.ListResult:
+    def list(self, args: entry.ListArgs) -> entry.ListResult:
         logger.info(f"List {self.name}")
         data_source_names = sorted(
             [
@@ -54,4 +56,4 @@ class PluginEntry(Entry):
                 for i in self._data_sources
             ]
         )
-        return model.ListResult({self.name: data_source_names})
+        return entry.ListResult({self.name: data_source_names})
