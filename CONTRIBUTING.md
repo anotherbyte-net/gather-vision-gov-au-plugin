@@ -94,8 +94,9 @@ pip install dist/gather_vision_gov_au_plugin-$GATHER_VISION_GOV_AU_PLUGIN_VERSIO
 Test the installed package.
 
 ```python
-from gather_vision import app, model
-app_args = model.ListArgs()
+from gather_vision import app
+from gather_vision.plugin import entry
+app_args = entry.ListArgs()
 main_app = app.App()
 main_app.list(app_args)
 ```
